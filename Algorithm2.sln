@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Jigsaw Puzzle", "Jigsaw Puz
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gnalcats", "Gnalcats\Gnalcats.vcxproj", "{DF2308A6-7CF7-48B2-8754-87CD73333F94}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Yut Nori", "Yut Nori\Yut Nori.vcxproj", "{80710B64-39A6-44FC-8AF6-94895C478633}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{DF2308A6-7CF7-48B2-8754-87CD73333F94}.Release|x64.Build.0 = Release|x64
 		{DF2308A6-7CF7-48B2-8754-87CD73333F94}.Release|x86.ActiveCfg = Release|Win32
 		{DF2308A6-7CF7-48B2-8754-87CD73333F94}.Release|x86.Build.0 = Release|Win32
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Debug|x64.ActiveCfg = Debug|x64
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Debug|x64.Build.0 = Debug|x64
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Debug|x86.ActiveCfg = Debug|Win32
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Debug|x86.Build.0 = Debug|Win32
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Release|x64.ActiveCfg = Release|x64
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Release|x64.Build.0 = Release|x64
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Release|x86.ActiveCfg = Release|Win32
+		{80710B64-39A6-44FC-8AF6-94895C478633}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
