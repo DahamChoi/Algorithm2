@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BOJ 대회 스코어보드"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Filght Collision", "Filght Collision\Filght Collision.vcxproj", "{4785BABD-9DDE-4D95-BC50-A899629A0D86}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Jigsaw Puzzle", "Jigsaw Puzzle\Jigsaw Puzzle.vcxproj", "{3949DF37-3A26-42AE-902D-67226CF2D8E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{4785BABD-9DDE-4D95-BC50-A899629A0D86}.Release|x64.Build.0 = Release|x64
 		{4785BABD-9DDE-4D95-BC50-A899629A0D86}.Release|x86.ActiveCfg = Release|Win32
 		{4785BABD-9DDE-4D95-BC50-A899629A0D86}.Release|x86.Build.0 = Release|Win32
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Debug|x64.ActiveCfg = Debug|x64
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Debug|x64.Build.0 = Debug|x64
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Debug|x86.ActiveCfg = Debug|Win32
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Debug|x86.Build.0 = Debug|Win32
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Release|x64.ActiveCfg = Release|x64
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Release|x64.Build.0 = Release|x64
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Release|x86.ActiveCfg = Release|Win32
+		{3949DF37-3A26-42AE-902D-67226CF2D8E0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
