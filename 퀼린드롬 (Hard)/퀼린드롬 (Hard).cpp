@@ -9,19 +9,26 @@
 using namespace std;
 
 unordered_map<char, char> quillindrom_table = {
-    {'A','A'},{'B',' '},{'C',' '},{'D',' '},{'E','3'},
-    {'F',' '},{'G',' '},{'H','H'},{'I','I'},{'J',' '},
-    {'K',' '},{'L',' '},{'M','M'},{'N',' '},{'O','O'},
-    {'P',' '},{'Q',' '},{'R',' '},{'S','2'},{'T','T'},
+    {'A','A'},{'E','3'},
+    {'H','H'},{'I','I'},
+    {'M','M'},{'O','O'},
+    {'S','2'},{'T','T'},
     {'U','U'},{'V','V'},{'W','W'},{'X','X'},{'Y','Y'},
-    {'Z','5'},{'a',' '},{'b','d'},{'c',' '},{'d','b'},
-    {'e',' '},{'f',' '},{'g',' '},{'h',' '},{'i','i'},
-    {'j',' '},{'k',' '},{'l','l'},{'m','m'},{'n','n'},
-    {'o','o'},{'p','q'},{'q','p'},{'r','7'},{'s',' '},
-    {'t',' '},{'u','u'},{'v','v'},{'w','w'},{'x','x'},
-    {'y',' '},{'z',' '},{'0','0'},{'1','1'},{'2','S'},
-    {'3','E'},{'4',' '},{'5','Z'},{'6',' '},{'7','r'},
-    {'8','8'},{'9',' '}
+    {'Z','5'},{'b','d'},{'d','b'},
+    {'i','i'},
+    {'l','l'},{'m','m'},{'n','n'},
+    {'o','o'},{'p','q'},{'q','p'},{'r','7'},
+    {'u','u'},{'v','v'},{'w','w'},{'x','x'},
+    {'0','0'},{'1','1'},{'2','S'},
+    {'3','E'},{'5','Z'},{'7','r'},
+    {'8','8'}
+};
+
+unordered_map<char, char> fix_table = {
+    {'B','b'},{'D','d'},{'L','l'},{'N','n'},{'P','p'},{'Q','q'},
+    {'R','r'},{'a','A'},{'e','E'},{'h','H'},{'i','I'},{'m','M'},
+    {'o','O'},{'s','S'},{'t','T'},{'u','U'},{'v','V'},{'w','W'},
+    {'x','X'},{'y','Y'},{'z','Z'}
 };
 
 vector<int> getPartialMatch(const string& N) {
@@ -85,44 +92,39 @@ int solution(const string& a, const string& b) {
 
 int main() {
     auto func = [&](const char c) {
-        if (quillindrom_table[c] == ' ') {
-            return isupper(c) ? quillindrom_table[tolower(c)] : quillindrom_table[toupper(c)];
-        }
         return quillindrom_table[c];
     };
 
     string str; cin >> str;
 
-    string sub_str_1(str.rbegin(), str.rend());
-    transform(sub_str_1.begin(), sub_str_1.end(), sub_str_1.begin(), func);
     string fix_str_1 = str;
     for (int i = 0; i < int(fix_str_1.length()); i++) {
-        if (quillindrom_table[fix_str_1[i]] == ' ') {
-            fix_str_1[i] = isupper(fix_str_1[i]) ? tolower(fix_str_1[i]) : toupper(fix_str_1[i]);
-            if (quillindrom_table[fix_str_1[i]] == ' ') {
-                cout << -1;
-                return 0;
-            }
+        if (fix_table.find(fix_str_1[i]) != fix_table.end()) {
+            fix_str_1[i] = fix_table[fix_str_1[i]];
+        }
+        
+        if (quillindrom_table.find(fix_str_1[i]) == quillindrom_table.end()) {
+            cout << -1;
+            return 0;
         }
     }
 
+    string sub_str_1(fix_str_1.rbegin(), fix_str_1.rend());
+    transform(sub_str_1.begin(), sub_str_1.end(), sub_str_1.begin(), func);
+
     int answer_length_1 = str.length() - (solution(fix_str_1, sub_str_1));
 
-    string fix_str_2 = fix_str_1;
-    reverse(fix_str_2.begin(), fix_str_2.end());
-
+    string fix_str_2(fix_str_1.rbegin(), fix_str_1.rend());
     string sub_str_2(fix_str_2.rbegin(), fix_str_2.rend());
     transform(sub_str_2.begin(), sub_str_2.end(), sub_str_2.begin(), func);
 
     int answer_length_2 = str.length() - (solution(fix_str_2, sub_str_2));
 
     if (answer_length_1 < answer_length_2) {
-        cout << fix_str_1;
-        cout << sub_str_1.substr(str.length() - answer_length_1, answer_length_1);
+        cout << (fix_str_1 + sub_str_1.substr(str.length() - answer_length_1, answer_length_1));
     }
     else {
-        cout << sub_str_1.substr(0, answer_length_2);
-        cout << fix_str_1;
+        cout << (sub_str_1.substr(0, answer_length_2) + fix_str_1);
     }
 
     return 0;
