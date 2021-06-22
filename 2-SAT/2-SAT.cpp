@@ -1,20 +1,117 @@
-﻿// 2-SAT.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
+﻿#include <iostream>
+#include <vector>
+#include <algorithm>
 
-#include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+vector<vector<int>> graph;
+vector<int> scc_id, discovered, stack;
+int scc_counter, vertex_counter;
+
+int scc(int here) {
+	int ref = discovered[here] = vertex_counter++;
+	stack.push_back(here);
+	for (int i = 0; i < graph[here].size(); i++) {
+		int there = graph[here][i];
+		if (discovered[there] == -1) {
+			ref = min(ref, scc(there));
+		}
+		else if (scc_id[there] == -1) {
+			ref = min(ref, discovered[there]);
+		}
+	}
+
+	if (ref == discovered[here]) {
+		while (true) {
+			int t = stack.back();
+			stack.pop_back();
+			scc_id[t] = scc_counter;
+			if (t == here)	break;
+		}
+		++scc_counter;
+	}
+
+	return ref;
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+vector<int> tarjan_scc() {
+	scc_id = discovered = vector<int>(graph.size(), -1);
+	scc_counter = vertex_counter = 0;
+	for (int i = 0; i < graph.size(); i++) {
+		if (discovered[i] == -1) {
+			scc(i);
+		}
+	}
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+	return scc_id;
+}
+
+vector<int> solution() {
+	int n = graph.size() / 2;
+	vector<int> label = tarjan_scc();
+
+	for (int i = 0; i < 2 * n; i += 2) {
+		if (label[i] == label[i + 1]) {
+			return {};
+		}
+	}
+
+	vector<int> value(2 * n, -1);
+	vector<pair<int, int>> order;
+	for (int i = 0; i < 2 * n; i++) {
+		order.push_back({ -label[i], i });
+	}
+
+	sort(order.begin(), order.end());
+	for (int i = 0; i < 2 * n; i++) {
+		int vertex = order[i].second;
+		int variable = vertex / 2;
+		if (value[variable] != -1)	continue;
+		value[variable] = (!(vertex % 2 == 0)) ? 1 : 0;
+	}
+
+	return value;
+}
+
+int main() {
+	ios::sync_with_stdio(0);	cin.tie(0);
+	int N, M;	cin >> N >> M;
+
+	graph.assign(N * 2, {});
+
+	for (int i = 0; i < M; i++) {
+		int x, y;	cin >> x >> y;
+		bool is_x_not = (x < 0), is_y_not = (y < 0);
+		x = abs(x);	y = abs(y);
+		--x; --y;
+		if (is_x_not && is_y_not) {
+			graph[x * 2].push_back(y * 2 + 1);
+			graph[y * 2].push_back(x * 2 + 1);
+		}
+		else if (!is_x_not && is_y_not) {
+			graph[x * 2 + 1].push_back(y * 2 + 1);
+			graph[y * 2].push_back(x * 2);
+		}
+		else if (is_x_not && !is_y_not) {
+			graph[x * 2].push_back(y * 2);
+			graph[y * 2 + 1].push_back(x * 2 + 1);
+		}
+		else if (!is_x_not && !is_y_not) {
+			graph[x * 2 + 1].push_back(y * 2);
+			graph[y * 2 + 1].push_back(x * 2);
+		}
+	}
+
+	vector<int> answer = solution();
+	if (answer.empty()) {
+		cout << 0;
+		return 0;
+	}
+
+	cout << 1 << '\n';
+	for (int i = 0; i < answer.size() / 2; i++) {
+		cout << answer[i] << ' ';
+	}
+
+	return 0;
+}
